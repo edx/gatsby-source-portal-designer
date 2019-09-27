@@ -58,25 +58,27 @@ function createPagesWithData(result, actions, templates) {
     });
   } else {
     const programs = allPagesData.filter(node => node.pageType === 'pages.ProgramPage');
-    // Create the program listing page. This page must exist as it
-    // handles the redirect to an individual program in the case where
-    // only one program exists and the user goes to the `/` path.
-    createPage({
-      path: '/',
-      component: templates.programListPage,
-      context: { programs },
-    });
-
-    // Create Gatsby pages for each page from portal-designer so long as
-    // we are not only building the program listing page.
-    if (!onlyCreateListingPage) {
-      programs.forEach((pageData) => {
-        createPage({
-          path: pageData.programSlug,
-          component: templates.programPage,
-          context: pageData,
-        });
+    if (programs.length > 0) {
+      // Create the program listing page. This page must exist as it
+      // handles the redirect to an individual program in the case where
+      // only one program exists and the user goes to the `/` path.
+      createPage({
+        path: '/',
+        component: templates.programListPage,
+        context: { programs },
       });
+
+      // Create Gatsby pages for each page from portal-designer so long as
+      // we are not only building the program listing page.
+      if (!onlyCreateListingPage) {
+        programs.forEach((pageData) => {
+          createPage({
+            path: pageData.programSlug,
+            component: templates.programPage,
+            context: pageData,
+          });
+        });
+      }
     }
   }
 }
