@@ -20,8 +20,7 @@ jobs:
           node-version: 12
 
       - name: Install dependencies
-        run: |
-            npm i -g gatsby
+        run: npm ci
 
       - name: Release Package
         env:
